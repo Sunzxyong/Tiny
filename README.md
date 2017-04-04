@@ -4,11 +4,11 @@ an image compression framework.
 ## **License**
 
 >
->                                 Apache License
->                            Version 2.0, January 2004
->                         http://www.apache.org/licenses/
+>          Apache License
+>     Version 2.0, January 2004
+>  http://www.apache.org/licenses/
 >
->                              Copyright 2017 郑晓勇
+>      Copyright 2017 郑晓勇
 >
 >  Licensed under the Apache License, Version 2.0 (the "License");
 >  you may not use this file except in compliance with the License.
