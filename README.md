@@ -20,6 +20,9 @@ or
 372KB (500x500) | 38.67KB (500x500) | 34.05KB (500x500)|
 236KB (960x1280) | 127KB (960x1280) | 118KB (960x1280)|
 
+## **Introduce**
+`Tiny` does not depend on any library , it keeps the code clean on architecture . `Tiny` also uses asynchronous thread pool to compress image , and will hand out the result in the main thread when compress is completes.
+
 ## **Usage**
 ### **Installation**
 
@@ -30,7 +33,7 @@ compile 'com.zxy.android:tiny:${LAST_VERSION}'
 ### **Choose an abi**
 **Tiny** provide abi：`armeabi`、`armeabi-v7a`、`arm64-v8a`、`x86`.
 
-Choose what you need "abi" version：
+Choose what you need **"abi"** version：
 
 ```
 android {
