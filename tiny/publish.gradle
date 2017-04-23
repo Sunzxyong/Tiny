@@ -1,0 +1,82 @@
+def siteUrl = project.site_url
+def gitUrl = project.git_url
+def issueUrl = project.git_issue_url
+
+group = project.upload_group_id
+version = project.upload_version
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = project.bintray_pkg_repo
+        name = project.bintray_pkg_name
+        desc = project.bintray_pkg_desc
+        websiteUrl = siteUrl
+        issueTrackerUrl = issueUrl
+        vcsUrl = gitUrl
+        licenses = ['Apache-2.0']
+        labels = ['aar', 'android', project.name]
+        publish = true
+        publicDownloadNumbers = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                name project.bintray_pkg_name
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id project.developer_id
+                        name project.developer_name
+                        email project.developer_email
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}

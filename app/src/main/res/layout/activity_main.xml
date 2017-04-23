@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    android:scrollbars="vertical"
+    tools:context="com.zxy.tiny.test.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="20dp"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Device info"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="20dp"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Compress case"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="onClick"
+            android:text="Compress —> Bitmap"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Compress —> File"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Compress —> File(with return bitmap)"
+            android:textAllCaps="false"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="20dp"
+                android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="Batch compress case"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Batch compress —> Bitmap"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_five"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Batch compress —> File"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btn_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="Batch Compress —> File(with return bitmap)"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</ScrollView>

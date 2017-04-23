@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_config"
+        android:title="ARGB_8888"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_file"
+        android:title="File[]"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_bitmap"
+        android:title="Bitmap[]"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_res"
+        android:title="Resource[]"
+        app:showAsAction="collapseActionView"/>
+    <item
+        android:id="@+id/action_uri"
+        android:title="Uri[]"
+        app:showAsAction="collapseActionView"/>
+</menu>

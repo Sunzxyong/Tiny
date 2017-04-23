@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+
+}
+
+ext {
+    upload_group_id = 'com.zxy.android'
+    upload_version = TINY_VERSION
+
+    site_url = 'https://github.com/Sunzxyong/Tiny'
+    git_url = 'https://github.com/Sunzxyong/Tiny.git'
+    git_issue_url = 'https://github.com/Sunzxyong/Tiny/issues'
+
+    bintray_pkg_repo = 'maven'
+    bintray_pkg_name = 'Tiny'
+    bintray_pkg_desc = 'an image compression framework.'
+
+    developer_id = 'Sunzxyong'
+    developer_name = 'zhengxiaoyong'
+    developer_email = '1175151739@qq.com'
+}
+
+apply from: 'publish.gradle'
