@@ -21,7 +21,7 @@ or
 236KB (960x1280) | 127KB (960x1280) | 118KB (960x1280)|
 
 ## **Introduce**
-`Tiny` does not depend on any library , it keeps the code clean on architecture . `Tiny` also uses asynchronous thread pool to compress image , and will hand out the result in the main thread when compression is completes.
+`Tiny` does not depend on any library , it keeps the code clean on architecture . `Tiny` also uses asynchronous thread pool to compress image , and will hand out the result in the main thread when compression is completed.
 
 ## **Usage**
 ### **Installation**
