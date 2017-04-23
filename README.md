@@ -1,5 +1,103 @@
-# Tiny
+# **Tiny**
 an image compression framework.
+
+----
+
+[ ![Download](https://api.bintray.com/packages/sunzxyong/maven/Tiny/images/download.svg) ](https://bintray.com/sunzxyong/maven/Tiny/_latestVersion)[![Travis](https://img.shields.io/travis/rust-lang/rust.svg)]() [![Hex.pm](https://img.shields.io/hexpm/l/plug.svg)]()
+
+[Blog entry with introduction](http://zhengxiaoyong.me/2017/04/23/Android%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E6%A1%86%E6%9E%B6-Tiny/)
+
+## **Effect of compression**
+
+| ImageInfo | Tiny | Wechat |
+| :-: | :-: | :-: |
+6.66MB (3500x2156) | 151KB (1280x788) | 135KB (1280x789)|
+4.28MB (4160x3120) | 219KB (1280x960)| 195KB (1280x960)|
+2.60MB (4032x3024) | 193KB (1280x960))| 173KB (1280x960)|
+372KB (500x500) | 38.67KB (500x500) | 34.05KB (500x500)|
+236KB (960x1280) | 127KB (960x1280) | 118KB (960x1280)|
+
+## **Usage**
+### **Installation**
+
+```
+compile 'com.zxy.android:tiny:${LAST_VERSION}'
+```
+### **Initialization**
+
+```
+Tiny.getInstance().init(this);
+```
+### **Compression**
+
+#### **AsBitmap**
+
+```
+        Tiny.BitmapCompressOptions options = new Tiny.BitmapCompressOptions();
+        Tiny.getInstance().source("").asBitmap().withOptions(options).compress(new BitmapCallback() {
+            @Override
+            public void callback(boolean isSuccess, Bitmap bitmap) {
+                //return the compressed bitmap object
+            }
+        });
+```
+
+#### **AsFile**
+
+```
+        Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
+        Tiny.getInstance().source("").asFile().withOptions(options).compress(new FileCallback() {
+            @Override
+            public void callback(boolean isSuccess, String outfile) {
+                //return the compressed file path
+            }
+        });
+```
+#### **AsFileWithReturnBitmap**
+
+```
+        Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
+        Tiny.getInstance().source("").asFile().withOptions(options).compress(new FileWithBitmapCallback() {
+            @Override
+            public void callback(boolean isSuccess, Bitmap bitmap, String outfile) {
+                //return the compressed file path and bitmap object
+            }
+        });
+```
+
+#### **BatchAsBitmap**
+
+```
+        Tiny.BitmapCompressOptions options = new Tiny.BitmapCompressOptions();
+        Tiny.getInstance().source("").batchAsBitmap().withOptions(options).batchCompress(new BitmapBatchCallback() {
+            @Override
+            public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+                //return the batch compressed bitmap object
+            }
+        });
+```
+#### **BatchAsFile**
+
+```
+        Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
+        Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompress(new FileBatchCallback() {
+            @Override
+            public void callback(boolean isSuccess, String[] outfile) {
+                //return the batch compressed file path
+            }
+        });
+```
+#### **BatchAsFileWithReturnBitmap**
+
+```
+        Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
+        Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompress(new FileWithBitmapBatchCallback() {
+            @Override
+            public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+                //return the batch compressed file path and bitmap object
+            }
+        });
+```
 
 ## **License**
 
@@ -22,3 +120,5 @@ an image compression framework.
 >  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 >  See the License for the specific language governing permissions and
 >  limitations under the License.
+
+
