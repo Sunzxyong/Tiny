@@ -26,6 +26,22 @@ or
 ```
 compile 'com.zxy.android:tiny:${LAST_VERSION}'
 ```
+
+### **Choose an abi**
+**Tiny** provide abi：`armeabi`、`armeabi-v7a`、`arm64-v8a`、`x86`.
+
+Choose what you need "abi" version：
+
+```
+android {
+    defaultConfig {
+        ndk {
+            abiFilters 'armeabi-v7a','x86'//or armeabi、arm64-v8a、x86
+        }
+    }
+}
+```
+
 ### **Initialization**
 
 ```
