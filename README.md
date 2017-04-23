@@ -7,7 +7,7 @@ an image compression framework.
 
 [Blog entry with introduction](http://zhengxiaoyong.me/2017/04/23/Android%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E6%A1%86%E6%9E%B6-Tiny/)
 or
-[Introduction of compressed](http://zhengxiaoyong.me/2017/04/23/%E4%B9%9F%E8%B0%88%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/)
+[Introduction of compression](http://zhengxiaoyong.me/2017/04/23/%E4%B9%9F%E8%B0%88%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9/)
 
 
 ## **Effect of compression**
