@@ -15,8 +15,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        Runtime.getRuntime().gc();
-
+        gcAndFinalize();
     }
 
     void startActivity(Class clazz) {
@@ -26,6 +25,13 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Runtime.getRuntime().gc();
+        gcAndFinalize();
+    }
+
+    void gcAndFinalize() {
+        Runtime runtime = Runtime.getRuntime();
+        System.gc();
+        runtime.runFinalization();
+        System.gc();
     }
 }

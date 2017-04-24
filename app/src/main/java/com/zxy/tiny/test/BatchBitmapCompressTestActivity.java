@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.format.Formatter;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,47 +82,23 @@ public class BatchBitmapCompressTestActivity extends BaseActivity {
                 break;
             case R.id.action_file:
                 free();
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testFile();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testFile();
                 break;
             case R.id.action_bitmap:
                 free();
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testBitmap();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testBitmap();
                 break;
             case R.id.action_res:
                 free();
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testResource();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testResource();
                 break;
             case R.id.action_uri:
                 free();
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testUri();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testUri();
                 break;
             default:
                 break;

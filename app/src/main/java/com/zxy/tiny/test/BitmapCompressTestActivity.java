@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.format.Formatter;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,7 +54,8 @@ public class BitmapCompressTestActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
+        mOriginImg.setImageBitmap(null);
+        mCompressImg.setImageBitmap(null);
         switch (id) {
             case R.id.action_config:
                 if (mConfig == Bitmap.Config.ARGB_8888) {
@@ -68,77 +68,29 @@ public class BitmapCompressTestActivity extends BaseActivity {
 
                 break;
             case R.id.action_bytes:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
                 //free memory for test
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testBytes();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testBytes();
                 break;
             case R.id.action_file:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testFile();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testFile();
                 break;
             case R.id.action_bitmap:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testBitmap();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testBitmap();
                 break;
             case R.id.action_stream:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testStream();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testStream();
                 break;
             case R.id.action_res:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testResource();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testResource();
                 break;
             case R.id.action_uri:
-                mOriginImg.setImageBitmap(null);
-                mCompressImg.setImageBitmap(null);
-                Runtime.getRuntime().gc();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Runtime.getRuntime().gc();
-                        testUri();
-                    }
-                }, 500);
+                gcAndFinalize();
+                testUri();
                 break;
             default:
                 break;
