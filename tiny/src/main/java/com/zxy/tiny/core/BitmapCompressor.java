@@ -9,7 +9,6 @@ import android.util.TypedValue;
 
 import com.zxy.tiny.Tiny;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,21 +32,30 @@ public class BitmapCompressor {
 
         Pair<Integer, Integer> screenPair = CompressKit.getDeviceScreenSizeInPixels();
 
+        boolean hasCustomSize = false;
+
+        if (compressWidth > 0 && compressHeight > 0)
+            hasCustomSize = true;
+
+        int baseline;
         if (isViewMode) {
             if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
                     screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                result = matrixCompress(bitmap, CompressKit.DEFAULT_MAX_COMPRESS_SIZE, false);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+                result = matrixCompress(bitmap, baseline, false);
             } else {
-                result = matrixCompress(bitmap, screenPair.second, false);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                result = matrixCompress(bitmap, baseline, false);
             }
         } else {
-            result = matrixCompress(bitmap, CompressKit.DEFAULT_MAX_COMPRESS_SIZE, false);
+            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            result = matrixCompress(bitmap, baseline, false);
         }
 
         if (result == null)
             return null;
 
-        if (compressWidth > 0 && compressHeight > 0) {
+        if (hasCustomSize) {
             result = customCompress(result, compressWidth, compressHeight, false);
         }
 
@@ -75,31 +83,34 @@ public class BitmapCompressor {
 
         Pair<Integer, Integer> screenPair = CompressKit.getDeviceScreenSizeInPixels();
 
+        boolean hasCustomSize = false;
+
+        if (compressWidth > 0 && compressHeight > 0)
+            hasCustomSize = true;
+
+        int baseline;
         if (isViewMode) {
             if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
                     screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, CompressKit.DEFAULT_MAX_COMPRESS_SIZE);
-                result = matrixCompress(sampleCompress(bytes, sampleSize, options), CompressKit.DEFAULT_MAX_COMPRESS_SIZE, true);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+                result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
             } else {
-                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, screenPair.second);
-                result = matrixCompress(sampleCompress(bytes, sampleSize, options), screenPair.second, true);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+                result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
             }
         } else {
-            int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, CompressKit.DEFAULT_MAX_COMPRESS_SIZE);
-            result = matrixCompress(sampleCompress(bytes, sampleSize, options), CompressKit.DEFAULT_MAX_COMPRESS_SIZE, true);
+            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+            result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
         }
 
         if (result == null)
             return null;
 
-        if (compressWidth > 0 && compressHeight > 0) {
+        if (hasCustomSize) {
             result = customCompress(result, compressWidth, compressHeight, true);
-        }
-
-        //processing bitmap degree.
-        if (ExifCompat.isJpeg(bytes)) {
-            int orientation = ExifCompat.getOrientation(bytes);
-            result = BitmapKit.rotateBitmap(result, orientation);
         }
 
         return result;
@@ -123,54 +134,34 @@ public class BitmapCompressor {
 
         Pair<Integer, Integer> screenPair = CompressKit.getDeviceScreenSizeInPixels();
 
+        boolean hasCustomSize = false;
+
+        if (compressWidth > 0 && compressHeight > 0)
+            hasCustomSize = true;
+
+        int baseline;
         if (isViewMode) {
             if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
                     screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, CompressKit.DEFAULT_MAX_COMPRESS_SIZE);
-                result = matrixCompress(sampleCompress(resId, sampleSize, options), CompressKit.DEFAULT_MAX_COMPRESS_SIZE, true);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+                result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
             } else {
-                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, screenPair.second);
-                result = matrixCompress(sampleCompress(resId, sampleSize, options), screenPair.second, true);
+                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+                result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
             }
         } else {
-            int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, CompressKit.DEFAULT_MAX_COMPRESS_SIZE);
-            result = matrixCompress(sampleCompress(resId, sampleSize, options), CompressKit.DEFAULT_MAX_COMPRESS_SIZE, true);
+            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
+            result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
         }
 
         if (result == null)
             return null;
 
-        if (compressWidth > 0 && compressHeight > 0) {
+        if (hasCustomSize) {
             result = customCompress(result, compressWidth, compressHeight, true);
-        }
-
-        //processing bitmap degree.
-        InputStream is = null;
-        Resources resources = Tiny.getInstance().getApplication().getResources();
-        try {
-            is = resources.openRawResource(resId, new TypedValue());
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            byte[] buffer = new byte[4096];
-            int len = -1;
-            while ((len = is.read(buffer)) != -1) {
-                os.write(buffer, 0, len);
-            }
-            os.close();
-
-            if (ExifCompat.isJpeg(os.toByteArray())) {
-                int orientation = ExifCompat.getOrientation(os.toByteArray());
-                result = BitmapKit.rotateBitmap(result, orientation);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    //ignore...
-                }
-            }
         }
 
         return result;
@@ -234,7 +225,9 @@ public class BitmapCompressor {
         BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
         decodeOptions.inPreferredConfig = options.config;
         decodeOptions.inSampleSize = sampleSize;
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, decodeOptions);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, decodeOptions);
+        bitmap = Degrees.handle(bitmap, bytes);
+        return bitmap;
     }
 
     public static Bitmap sampleCompress(int resId, int sampleSize, Tiny.BitmapCompressOptions options) {
@@ -245,7 +238,9 @@ public class BitmapCompressor {
             BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
             decodeOptions.inPreferredConfig = options.config;
             decodeOptions.inSampleSize = sampleSize;
-            return BitmapFactory.decodeStream(is, null, decodeOptions);
+            Bitmap bitmap = BitmapFactory.decodeStream(is, null, decodeOptions);
+            bitmap = Degrees.handle(bitmap, resId);
+            return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
