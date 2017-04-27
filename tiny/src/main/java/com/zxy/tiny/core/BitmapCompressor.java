@@ -9,6 +9,7 @@ import android.util.TypedValue;
 
 import com.zxy.tiny.Tiny;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -95,6 +96,12 @@ public class BitmapCompressor {
             result = customCompress(result, compressWidth, compressHeight, true);
         }
 
+        //processing bitmap degree.
+        if (ExifCompat.isJpeg(bytes)) {
+            int orientation = ExifCompat.getOrientation(bytes);
+            result = BitmapKit.rotateBitmap(result, orientation);
+        }
+
         return result;
     }
 
@@ -135,6 +142,35 @@ public class BitmapCompressor {
 
         if (compressWidth > 0 && compressHeight > 0) {
             result = customCompress(result, compressWidth, compressHeight, true);
+        }
+
+        //processing bitmap degree.
+        InputStream is = null;
+        Resources resources = Tiny.getInstance().getApplication().getResources();
+        try {
+            is = resources.openRawResource(resId, new TypedValue());
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            byte[] buffer = new byte[4096];
+            int len = -1;
+            while ((len = is.read(buffer)) != -1) {
+                os.write(buffer, 0, len);
+            }
+            os.close();
+
+            if (ExifCompat.isJpeg(os.toByteArray())) {
+                int orientation = ExifCompat.getOrientation(os.toByteArray());
+                result = BitmapKit.rotateBitmap(result, orientation);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    //ignore...
+                }
+            }
         }
 
         return result;

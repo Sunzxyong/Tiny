@@ -3,6 +3,7 @@ package com.zxy.tiny.core;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 
 /**
  * Created by zhengxiaoyong on 2017/3/13.
@@ -121,6 +123,20 @@ public final class BitmapKit {
                 return RGB_565_BYTES_PER_PIXEL * getSizeInBytes(bitmap);
         }
         throw new TinyException.UnsupportedParamException("this bitmap config is not supported!");
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int degree) {
+        if (bitmap == null || bitmap.isRecycled())
+            return bitmap;
+        if (degree != 90 && degree != 180 && degree != 270)
+            return bitmap;
+        float pointX = bitmap.getWidth() / 2;
+        float pointY = bitmap.getHeight() / 2;
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degree, pointX, pointY);
+        Bitmap result = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        bitmap.recycle();
+        return result;
     }
 
 }

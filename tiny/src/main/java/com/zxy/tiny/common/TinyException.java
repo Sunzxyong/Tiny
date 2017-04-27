@@ -28,4 +28,10 @@ public final class TinyException {
             super(message);
         }
     }
+
+    public static final class EOFException extends RuntimeException {
+        public EOFException(String message) {
+            super(message);
+        }
+    }
 }
