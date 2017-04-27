@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:0.0.1'
+compile 'com.zxy.android:tiny:0.0.2'
 ```
 
 ### **Choose an abi**
@@ -120,6 +120,11 @@ Tiny.getInstance().init(this);
             }
         });
 ```
+
+## **Version**
+
+> **0.0.1**:The first version.
+> **0.0.2**:Optimize the compression strategy,and handle with the orientation of bitmap.
 
 ## **License**
 
