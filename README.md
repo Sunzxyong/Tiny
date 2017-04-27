@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:${LAST_VERSION}'
+compile 'com.zxy.android:tiny:0.0.1'
 ```
 
 ### **Choose an abi**
