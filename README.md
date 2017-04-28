@@ -123,8 +123,8 @@ Tiny.getInstance().init(this);
 
 ## **Version**
 
-> **0.0.1**:The first version.
-> **0.0.2**:Optimize the compression strategy,and handle with the orientation of bitmap.
+* **v0.0.1**：The first version.
+* **v0.0.2**：Optimize the compression strategy,and handle with the orientation of bitmap.
 
 ## **License**
 
