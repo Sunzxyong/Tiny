@@ -31,7 +31,7 @@ dependencies {
 
 ext {
     upload_group_id = 'com.zxy.android'
-    upload_version = '0.0.2'
+    upload_version = '0.0.3'
 
     site_url = 'https://github.com/Sunzxyong/Tiny'
     git_url = 'https://github.com/Sunzxyong/Tiny.git'

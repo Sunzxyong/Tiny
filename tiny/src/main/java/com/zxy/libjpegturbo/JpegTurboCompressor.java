@@ -16,7 +16,6 @@ public class JpegTurboCompressor {
     }
 
     static {
-        System.loadLibrary("jpeg-turbo");
         System.loadLibrary("tiny");
     }
 

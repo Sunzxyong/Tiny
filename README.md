@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:0.0.2'
+compile 'com.zxy.android:tiny:0.0.3'
 ```
 
 ### **Choose an abi**
@@ -39,7 +39,7 @@ Choose what you need **"abi"** version：
 android {
     defaultConfig {
         ndk {
-            abiFilters 'armeabi-v7a','x86'//or armeabi、arm64-v8a、x86
+            abiFilters 'armeabi','x86'//or armeabi-v7a、arm64-v8a、x86
         }
     }
 }
@@ -48,7 +48,7 @@ android {
 ### **Initialization**
 
 ```
-Tiny.getInstance().init(this);
+        Tiny.getInstance().init(this);
 ```
 ### **Compression**
 
@@ -56,6 +56,7 @@ Tiny.getInstance().init(this);
 
 ```
         Tiny.BitmapCompressOptions options = new Tiny.BitmapCompressOptions();
+        //options.height = xxx;//some compression configuration.
         Tiny.getInstance().source("").asBitmap().withOptions(options).compress(new BitmapCallback() {
             @Override
             public void callback(boolean isSuccess, Bitmap bitmap) {
@@ -125,6 +126,7 @@ Tiny.getInstance().init(this);
 
 * **v0.0.1**：The first version.
 * **v0.0.2**：Optimize the compression strategy,and handle with the orientation of bitmap.
+* **v0.0.3**：Unified as `libtiny.so`
 
 ## **License**
 
