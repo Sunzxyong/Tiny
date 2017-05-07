@@ -131,7 +131,7 @@ public final class Tiny {
         public int height;
     }
 
-    public static final class FileCompressOptions extends BitmapCompressOptions {
+    public static class FileCompressOptions extends BitmapCompressOptions {
 
         /**
          * The compression quality,value range:0~100.
@@ -160,8 +160,25 @@ public final class Tiny {
          * The output path of the compressed file.
          * <p>
          * By default,we will according to time to generate a outfile.
+         * <p>
+         * for batch see {@link BatchFileCompressOptions#outfiles}.
          */
         public String outfile;
+
+        /**
+         * Whether need to cover the source file,only to the file(file、content://、file://).
+         */
+        public boolean overrideSource = false;
+    }
+
+    public static class BatchFileCompressOptions extends FileCompressOptions {
+
+        /**
+         * The output paths of the compressed file.
+         * <p>
+         * By default,we will according to time to generate a outfile.
+         */
+        public String[] outfiles;
     }
 
 }

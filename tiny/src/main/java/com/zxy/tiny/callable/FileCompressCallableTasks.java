@@ -7,6 +7,7 @@ import com.zxy.tiny.Tiny;
 import com.zxy.tiny.common.BatchCompressResult;
 import com.zxy.tiny.common.CompressResult;
 import com.zxy.tiny.common.TinyException;
+import com.zxy.tiny.common.UriUtil;
 import com.zxy.tiny.core.BitmapCompressor;
 import com.zxy.tiny.core.CompressKit;
 import com.zxy.tiny.core.FileCompressor;
@@ -69,6 +70,8 @@ public class FileCompressCallableTasks {
             CompressResult result = null;
             FileInputStream fis = null;
             try {
+                if (mCompressOptions != null && mCompressOptions.overrideSource)
+                    mCompressOptions.outfile = mFile.getAbsolutePath();
                 fis = new FileInputStream(mFile);
                 result = FileCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, shouldReturnBitmap, true);
             } catch (Exception e) {
@@ -96,6 +99,10 @@ public class FileCompressCallableTasks {
         @Override
         public CompressResult call() throws Exception {
             Bitmap bitmap = new BitmapCompressCallableTasks.UriAsBitmapCallable(mCompressOptions, mUri).call();
+            if (mCompressOptions != null && mCompressOptions.overrideSource &&
+                    (UriUtil.isLocalContentUri(mUri) || UriUtil.isLocalFileUri(mUri))) {
+                mCompressOptions.outfile = UriUtil.getRealPathFromUri(mUri);
+            }
             return FileCompressor.compress(bitmap, mCompressOptions, shouldReturnBitmap, true);
         }
     }
@@ -144,6 +151,8 @@ public class FileCompressCallableTasks {
             BatchCompressResult result = new BatchCompressResult();
             result.results = new CompressResult[mFiles.length];
 
+            String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mFiles.length);
+
             for (int i = 0; i < mFiles.length; i++) {
                 File file = mFiles[i];
                 if (file == null) {
@@ -153,6 +162,13 @@ public class FileCompressCallableTasks {
                 CompressResult compressResult = null;
                 FileInputStream fis = null;
                 try {
+                    if (mCompressOptions != null) {
+                        if (outfilePaths != null && outfilePaths.length == mFiles.length)
+                            mCompressOptions.outfile = outfilePaths[i];
+
+                        if (mCompressOptions.overrideSource)
+                            mCompressOptions.outfile = file.getAbsolutePath();
+                    }
                     fis = new FileInputStream(file);
                     compressResult = FileCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, shouldReturnBitmap, true);
                 } catch (Exception e) {
@@ -189,8 +205,13 @@ public class FileCompressCallableTasks {
             BatchCompressResult result = new BatchCompressResult();
             result.results = new CompressResult[mBitmaps.length];
 
+            String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mBitmaps.length);
+
             for (int i = 0; i < mBitmaps.length; i++) {
                 Bitmap bitmap = mBitmaps[i];
+                if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mBitmaps.length)
+                    mCompressOptions.outfile = outfilePaths[i];
+
                 CompressResult compressResult = FileCompressor.compress(bitmap, mCompressOptions, shouldReturnBitmap, false);
                 if (compressResult != null)
                     result.success = true;
@@ -215,12 +236,17 @@ public class FileCompressCallableTasks {
             BatchCompressResult result = new BatchCompressResult();
             result.results = new CompressResult[mUris.length];
 
+            String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mUris.length);
+
             for (int i = 0; i < mUris.length; i++) {
                 Uri uri = mUris[i];
                 if (uri == null) {
                     result.results[i] = null;
                     continue;
                 }
+                if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mUris.length)
+                    mCompressOptions.outfile = outfilePaths[i];
+
                 CompressResult compressResult = new UriAsFileCallable(mCompressOptions, shouldReturnBitmap, uri).call();
                 if (compressResult != null)
                     result.success = true;
@@ -246,8 +272,13 @@ public class FileCompressCallableTasks {
             BatchCompressResult result = new BatchCompressResult();
             result.results = new CompressResult[mResIds.length];
 
+            String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mResIds.length);
+
             for (int i = 0; i < mResIds.length; i++) {
                 Bitmap bitmap = compress(mResIds[i], mCompressOptions, false);
+                if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mResIds.length)
+                    mCompressOptions.outfile = outfilePaths[i];
+
                 CompressResult compressResult = FileCompressor.compress(bitmap, mCompressOptions, shouldReturnBitmap, true);
                 if (compressResult != null)
                     result.success = true;
@@ -255,6 +286,33 @@ public class FileCompressCallableTasks {
             }
             return result;
         }
+    }
+
+    private static String[] getBatchOutfilePaths(Tiny.FileCompressOptions options, int length) {
+        if (options == null || length <= 0)
+            return null;
+        String[] outfilePaths = null;
+        if (options instanceof Tiny.BatchFileCompressOptions) {
+            Tiny.BatchFileCompressOptions compressOptions = (Tiny.BatchFileCompressOptions) options;
+            String[] outfiles = compressOptions.outfiles;
+            if (outfiles != null && outfiles.length > 0) {
+                outfilePaths = new String[length];
+                if (outfiles.length >= length) {
+                    System.arraycopy(outfiles, 0, outfilePaths, 0, length);
+                } else {
+                    for (int i = 0; i < length; i++) {
+                        try {
+                            outfilePaths[i] = outfiles[i];
+                        } catch (Exception e) {
+                            outfilePaths[i] = null;
+                        }
+                    }
+                }
+            }
+        } else {
+            options.outfile = null;
+        }
+        return outfilePaths;
     }
 
 }
