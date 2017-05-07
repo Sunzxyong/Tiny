@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:0.0.3'
+compile 'com.zxy.android:tiny:0.0.4'
 ```
 
 ### **Choose an abi**
@@ -127,6 +127,7 @@ android {
 * **v0.0.1**：The first version.
 * **v0.0.2**：Optimize the compression strategy,and handle with the orientation of bitmap.
 * **v0.0.3**：Unified as `libtiny.so`
+* **v0.0.4**：Add cover source file configuration—see`{@link FileCompressOptions#overrideSource}`, and setting up the batch compressed file paths—see  `{@link BatchFileCompressOptions#outfiles}`
 
 ## **License**
 
