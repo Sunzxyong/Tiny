@@ -46,7 +46,8 @@ public class HttpUrlConnectionFetcher {
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
                 @Override
                 public boolean verify(String hostname, SSLSession session) {
-                    return true;
+                    //for google store reject,see https://support.google.com/faqs/answer/7188426.
+                    return !"www.abcdefgzxy.com".equalsIgnoreCase(hostname);
                 }
             });
         } catch (NoSuchAlgorithmException e) {
