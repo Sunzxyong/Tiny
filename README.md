@@ -14,14 +14,14 @@ or
 
 | ImageInfo | Tiny | Wechat |
 | :-: | :-: | :-: |
-6.66MB (3500x2156) | 151KB (1280x788) | 135KB (1280x789)|
+6.66MB (3500x2156) | 151KB (1280x788) | 135KB (1280x788)|
 4.28MB (4160x3120) | 219KB (1280x960)| 195KB (1280x960)|
-2.60MB (4032x3024) | 193KB (1280x960))| 173KB (1280x960)|
+2.60MB (4032x3024) | 193KB (1280x960)| 173KB (1280x960)|
 372KB (500x500) | 38.67KB (500x500) | 34.05KB (500x500)|
 236KB (960x1280) | 127KB (960x1280) | 118KB (960x1280)|
 
 ## **Introduce**
-`Tiny` does not depend on any library , it keeps the code clean on architecture . `Tiny` also uses asynchronous thread pool to compress image , and will hand out the result in the main thread when compression is completed.
+`Tiny` does not depend on any library , it keeps the code clean on architecture . `Tiny` also uses an asynchronous thread pool to compress images , and will hand out the result in the main thread when compression is completed.
 
 ## **Usage**
 ### **Installation**
