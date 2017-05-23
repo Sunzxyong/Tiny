@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:0.0.5'
+compile 'com.zxy.android:tiny:0.0.6'
 ```
 
 ### **Choose an abi**
@@ -129,6 +129,7 @@ android {
 * **v0.0.3**：Unified as `libtiny.so`
 * **v0.0.4**：Add cover source file configuration—see`{@link FileCompressOptions#overrideSource}`, and setting up the batch compressed file paths—see  `{@link BatchFileCompressOptions#outfiles}`
 * **v0.0.5**：Fix google store reject.
+* **v0.0.6**：Initialization is not must.Add clear compression directory method,see`{@link Tiny#clearCompressDirectory}`
 
 ## **License**
 
