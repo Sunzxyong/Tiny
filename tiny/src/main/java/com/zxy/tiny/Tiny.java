@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.zxy.tiny.common.ApplicationLoader;
 import com.zxy.tiny.common.TinyException;
 import com.zxy.tiny.core.CompressEngine;
 import com.zxy.tiny.core.CompressKit;
@@ -43,6 +44,12 @@ public final class Tiny {
         return this;
     }
 
+    /**
+     * Initialization is not must.
+     *
+     * @param application
+     */
+    @Deprecated
     public void init(Application application) {
         if (application == null)
             throw new TinyException.IllegalArgumentException("application can not be null!");
@@ -55,7 +62,7 @@ public final class Tiny {
 
     public Application getApplication() {
         if (mApplication == null)
-            throw new TinyException.UnsupportedOperationException("must initialize the 'Tiny' framework before use!");
+            mApplication = ApplicationLoader.get();
         return mApplication;
     }
 
@@ -105,6 +112,16 @@ public final class Tiny {
 
     public synchronized CompressEngine source(int[] resIds) {
         return new CompressEngine().source(resIds);
+    }
+
+    public synchronized boolean clearCompressDirectory() {
+        File dir = FileKit.getDefaultFileCompressDirectory();
+        try {
+            return FileKit.clearDirectory(dir);
+        } catch (Exception e) {
+            //for android 6.0+,permission request
+        }
+        return false;
     }
 
     public static class BitmapCompressOptions {
