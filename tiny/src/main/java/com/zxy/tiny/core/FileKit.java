@@ -4,6 +4,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.zxy.tiny.Tiny;
+import com.zxy.tiny.common.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,5 +91,26 @@ public final class FileKit {
             files[i] = TextUtils.isEmpty(filePath) ? new File("") : new File(filePath);
         }
         return files;
+    }
+
+    public static boolean clearDirectory(File dir) {
+        if (dir == null || !dir.isDirectory() || !dir.exists())
+            return false;
+        File[] files = dir.listFiles();
+        int length = files.length;
+        for (int i = 0; i < length; i++) {
+            File file = files[i];
+            if (file == null)
+                continue;
+            if (file.isFile() && file.exists()) {
+                boolean result = file.delete();
+                Logger.e(file.getName() + (result ? " delete success!" : " delete failed!"));
+                continue;
+            }
+            if (file.isDirectory() && file.exists()) {
+                clearDirectory(file);
+            }
+        }
+        return true;
     }
 }
