@@ -1,18 +1,27 @@
 package com.zxy.tiny.core;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.TypedValue;
 
 import com.zxy.libjpegturbo.JpegTurboCompressor;
 import com.zxy.tiny.Tiny;
 import com.zxy.tiny.common.CompressResult;
 import com.zxy.tiny.common.Conditions;
 import com.zxy.tiny.common.Logger;
+import com.zxy.tiny.common.UriUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by zhengxiaoyong on 2017/3/13.
@@ -27,16 +36,8 @@ public class FileCompressor {
             options = new Tiny.FileCompressOptions();
 
         CompressResult result = null;
-        Bitmap bitmap = null;
-
-        if (options.isKeepSampling) {
-            //TODO do you need? compress in the compression process.
-            BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
-            decodeOptions.inPreferredConfig = options.config;
-            bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, decodeOptions);
-        } else {
-            bitmap = BitmapCompressor.compress(bytes, options, false);
-        }
+        Bitmap bitmap = shouldKeepSampling(bytes, options);
+        Log.e("zxy", "bitmap00:" + bitmap.getWidth() + "," + bitmap.getHeight());
         result = compress(bitmap, options, withBitmap, recycle);
         return result;
     }
@@ -44,7 +45,7 @@ public class FileCompressor {
     public static CompressResult compress(Bitmap bitmap, Tiny.FileCompressOptions options, boolean withBitmap, boolean recycle) {
         if (bitmap == null || bitmap.isRecycled())
             return null;
-
+        Log.e("zxy", "bitmap11:" + bitmap.getWidth() + "," + bitmap.getHeight());
         CompressResult result = new CompressResult();
 
         if (options == null)
@@ -140,5 +141,121 @@ public class FileCompressor {
             }
             return isSuccess;
         }
+    }
+
+    public static Bitmap shouldKeepSampling(byte[] bytes, Tiny.FileCompressOptions options) {
+        if (bytes == null || bytes.length == 0)
+            return null;
+        if (options == null)
+            options = new Tiny.FileCompressOptions();
+
+        Bitmap result = null;
+        if (options.isKeepSampling) {
+            //TODO do you need? compress in the compression process.
+            BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
+            decodeOptions.inPreferredConfig = options.config;
+            result = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, decodeOptions);
+        } else {
+            result = BitmapCompressor.compress(bytes, options, false);
+        }
+        return result;
+    }
+
+    public static Bitmap shouldKeepSampling(Bitmap bitmap, Tiny.FileCompressOptions options) {
+        if (bitmap == null || bitmap.isRecycled())
+            return null;
+        if (options == null)
+            options = new Tiny.FileCompressOptions();
+
+        Bitmap result = null;
+        if (options.isKeepSampling) {
+            result = bitmap;
+        } else {
+            result = BitmapCompressor.compress(bitmap, options, false);
+        }
+        return result;
+    }
+
+    public static Bitmap shouldKeepSampling(int resId, Tiny.FileCompressOptions options) {
+        if (options == null)
+            options = new Tiny.FileCompressOptions();
+
+        Bitmap result = null;
+        if (options.isKeepSampling) {
+            //for drawable resource,get the original size of resources,without scaling.
+            InputStream is = null;
+            Resources resources = Tiny.getInstance().getApplication().getResources();
+            try {
+                is = resources.openRawResource(resId, new TypedValue());
+                BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
+                decodeOptions.inPreferredConfig = options.config;
+                return BitmapFactory.decodeStream(is, null, decodeOptions);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException e) {
+                        //ignore...
+                    }
+                }
+            }
+        } else {
+            result = BitmapCompressor.compress(resId, options, false);
+        }
+        return result;
+    }
+
+    public static Bitmap shouldKeepSampling(Uri uri, final Tiny.FileCompressOptions options) {
+        if (uri == null)
+            return null;
+
+        final Bitmap[] result = {null};
+        if (UriUtil.isNetworkUri(uri)) {
+            HttpUrlConnectionFetcher.fetch(uri, new HttpUrlConnectionFetcher.ResponseCallback() {
+                @Override
+                public void callback(InputStream is) {
+                    byte[] decodeBytes = CompressKit.transformToByteArray(is);
+                    if (options.isKeepSampling) {
+                        BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
+                        decodeOptions.inPreferredConfig = options.config;
+                        result[0] = BitmapFactory.decodeByteArray(decodeBytes, 0, decodeBytes.length, decodeOptions);
+                    } else {
+                        result[0] = BitmapCompressor.compress(decodeBytes, options, true);
+                    }
+                }
+            });
+
+        } else if (UriUtil.isLocalContentUri(uri) || UriUtil.isLocalFileUri(uri)) {
+            String filePath = UriUtil.getRealPathFromUri(uri);
+            if (TextUtils.isEmpty(filePath))
+                return null;
+            if (Conditions.fileIsExist(filePath) && Conditions.fileCanRead(filePath)) {
+                FileInputStream fis = null;
+                File file = new File(filePath);
+                try {
+                    fis = new FileInputStream(file);
+                    byte[] decodeBytes = CompressKit.transformToByteArray(fis);
+                    if (options.isKeepSampling) {
+                        BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
+                        decodeOptions.inPreferredConfig = options.config;
+                        result[0] = BitmapFactory.decodeByteArray(decodeBytes, 0, decodeBytes.length, decodeOptions);
+                    } else {
+                        result[0] = BitmapCompressor.compress(decodeBytes, options, true);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (fis != null)
+                            fis.close();
+                    } catch (IOException e) {
+                        //ignore...
+                    }
+                }
+            }
+        }
+        return result[0];
     }
 }

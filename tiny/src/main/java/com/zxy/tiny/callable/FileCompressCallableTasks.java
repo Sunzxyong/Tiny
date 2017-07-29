@@ -8,7 +8,6 @@ import com.zxy.tiny.common.BatchCompressResult;
 import com.zxy.tiny.common.CompressResult;
 import com.zxy.tiny.common.TinyException;
 import com.zxy.tiny.common.UriUtil;
-import com.zxy.tiny.core.BitmapCompressor;
 import com.zxy.tiny.core.CompressKit;
 import com.zxy.tiny.core.FileCompressor;
 
@@ -16,8 +15,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import static com.zxy.tiny.core.BitmapCompressor.compress;
 
 /**
  * Created by zhengxiaoyong on 2017/3/13.
@@ -52,7 +49,7 @@ public class FileCompressCallableTasks {
 
         @Override
         public CompressResult call() throws Exception {
-            Bitmap bitmap = BitmapCompressor.compress(mBitmap, mCompressOptions, false);
+            Bitmap bitmap = FileCompressor.shouldKeepSampling(mBitmap, mCompressOptions);
             return FileCompressor.compress(bitmap, mCompressOptions, shouldReturnBitmap, false);
         }
     }
@@ -98,7 +95,7 @@ public class FileCompressCallableTasks {
 
         @Override
         public CompressResult call() throws Exception {
-            Bitmap bitmap = new BitmapCompressCallableTasks.UriAsBitmapCallable(mCompressOptions, mUri).call();
+            Bitmap bitmap = FileCompressor.shouldKeepSampling(mUri,mCompressOptions);
             if (mCompressOptions != null && mCompressOptions.overrideSource &&
                     (UriUtil.isLocalContentUri(mUri) || UriUtil.isLocalFileUri(mUri))) {
                 mCompressOptions.outfile = UriUtil.getRealPathFromUri(mUri);
@@ -131,7 +128,7 @@ public class FileCompressCallableTasks {
 
         @Override
         public CompressResult call() throws Exception {
-            Bitmap bitmap = compress(mResId, mCompressOptions, false);
+            Bitmap bitmap = FileCompressor.shouldKeepSampling(mResId, mCompressOptions);
             return FileCompressor.compress(bitmap, mCompressOptions, shouldReturnBitmap, true);
         }
     }
@@ -208,7 +205,7 @@ public class FileCompressCallableTasks {
             String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mBitmaps.length);
 
             for (int i = 0; i < mBitmaps.length; i++) {
-                Bitmap bitmap = mBitmaps[i];
+                Bitmap bitmap = FileCompressor.shouldKeepSampling(mBitmaps[i], mCompressOptions);
                 if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mBitmaps.length)
                     mCompressOptions.outfile = outfilePaths[i];
 
@@ -275,7 +272,7 @@ public class FileCompressCallableTasks {
             String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mResIds.length);
 
             for (int i = 0; i < mResIds.length; i++) {
-                Bitmap bitmap = compress(mResIds[i], mCompressOptions, false);
+                Bitmap bitmap = FileCompressor.shouldKeepSampling(mResIds[i],mCompressOptions);
                 if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mResIds.length)
                     mCompressOptions.outfile = outfilePaths[i];
 
