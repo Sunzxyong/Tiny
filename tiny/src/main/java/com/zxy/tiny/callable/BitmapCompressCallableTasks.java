@@ -41,8 +41,6 @@ public class BitmapCompressCallableTasks {
             try {
                 fis = new FileInputStream(mFile);
                 result = BitmapCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, true);
-            } catch (Exception e) {
-                e.printStackTrace();
             } finally {
                 try {
                     if (fis != null)
@@ -113,8 +111,6 @@ public class BitmapCompressCallableTasks {
                     try {
                         fis = new FileInputStream(file);
                         mResult = BitmapCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, true);
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     } finally {
                         try {
                             if (fis != null)
@@ -182,8 +178,6 @@ public class BitmapCompressCallableTasks {
                 try {
                     fis = new FileInputStream(file);
                     bitmap = BitmapCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 } finally {
                     try {
                         if (fis != null)

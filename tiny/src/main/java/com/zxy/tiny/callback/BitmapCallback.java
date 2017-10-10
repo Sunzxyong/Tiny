@@ -7,6 +7,6 @@ import android.graphics.Bitmap;
  */
 public interface BitmapCallback extends Callback {
 
-    void callback(boolean isSuccess, Bitmap bitmap);
+    void callback(boolean isSuccess, Bitmap bitmap, Throwable t);
 
 }

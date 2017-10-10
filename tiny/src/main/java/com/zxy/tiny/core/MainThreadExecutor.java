@@ -13,6 +13,10 @@ public class MainThreadExecutor {
     private static Handler sMainThreadHandler;
 
     public static <T> void postToMainThread(final T t, final CallbackDispatcher<T> dispatcher) {
+        postToMainThread(t, dispatcher, null);
+    }
+
+    public static <T> void postToMainThread(final T t, final CallbackDispatcher<T> dispatcher, final Throwable tr) {
         if (dispatcher == null)
             return;
 
@@ -21,7 +25,7 @@ public class MainThreadExecutor {
         sMainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                dispatcher.dispatch(t);
+                dispatcher.dispatch(t, tr);
             }
         });
     }

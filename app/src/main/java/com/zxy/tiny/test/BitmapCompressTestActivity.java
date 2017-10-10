@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -136,8 +137,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(bitmapBytes).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, final Bitmap bitmap) {
+                public void callback(boolean isSuccess, final Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }
@@ -173,8 +175,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(outfile).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap bitmap) {
+                public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }
@@ -202,8 +205,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(originBitmap).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap bitmap) {
+                public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }
@@ -241,8 +245,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(is2).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap bitmap) {
+                public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }
@@ -267,8 +272,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(R.drawable.test).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap bitmap) {
+                public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }
@@ -308,8 +314,9 @@ public class BitmapCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(Uri.parse(url)).asBitmap().withOptions(compressOptions).compress(new BitmapCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap bitmap) {
+                public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress bitmap failed!");
                         return;
                     }

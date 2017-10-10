@@ -1,14 +1,11 @@
 package com.zxy.tiny.common;
 
-import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  * Created by zhengxiaoyong on 2017/3/31.
  */
-public final class BatchCompressResult implements Serializable {
-
-    public boolean success;
+public final class BatchCompressResult extends Result {
 
     public CompressResult[] results;
 
@@ -17,6 +14,7 @@ public final class BatchCompressResult implements Serializable {
         return "BatchCompressResult{" +
                 "results=" + Arrays.toString(results) +
                 ", success=" + success +
+                ", throwable=" + throwable +
                 '}';
     }
 }

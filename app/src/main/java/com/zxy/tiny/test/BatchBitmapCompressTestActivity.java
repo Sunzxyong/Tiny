@@ -216,7 +216,7 @@ public class BatchBitmapCompressTestActivity extends BaseActivity {
             File[] files = new File[]{outfile1, outfile2, outfile3, outfile4};
             Tiny.getInstance().source(files).batchAsBitmap().withOptions(compressOptions).batchCompress(new BitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps,Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress bitmap failed!");
                         return;
@@ -255,7 +255,7 @@ public class BatchBitmapCompressTestActivity extends BaseActivity {
             Bitmap[] bitmaps = new Bitmap[]{originBitmap1, originBitmap2, originBitmap3, originBitmap4};
             Tiny.getInstance().source(bitmaps).batchAsBitmap().withOptions(compressOptions).batchCompress(new BitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps,Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress bitmap failed!");
                         return;
@@ -289,7 +289,7 @@ public class BatchBitmapCompressTestActivity extends BaseActivity {
             int[] resIds = new int[]{R.drawable.test_1, R.drawable.test_2, R.drawable.test_3, R.drawable.test};
             Tiny.getInstance().source(resIds).batchAsBitmap().withOptions(compressOptions).batchCompress(new BitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps,Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress bitmap failed!");
                         return;
@@ -323,7 +323,7 @@ public class BatchBitmapCompressTestActivity extends BaseActivity {
             Uri[] uris = new Uri[]{Uri.parse(url1), Uri.parse(url2), Uri.parse(url3), Uri.parse(url4)};
             Tiny.getInstance().source(uris).batchAsBitmap().withOptions(compressOptions).batchCompress(new BitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps,Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress bitmap failed!");
                         return;

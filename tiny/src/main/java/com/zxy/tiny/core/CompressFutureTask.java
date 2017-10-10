@@ -46,7 +46,7 @@ public class CompressFutureTask<T> extends FutureTask<T> {
     protected void setException(Throwable t) {
         super.setException(t);
 
-        MainThreadExecutor.postToMainThread(null, mCallbackDispatcher);
+        MainThreadExecutor.postToMainThread(null, mCallbackDispatcher, t);
 
         TinyUtil.printExceptionMessage(t);
     }

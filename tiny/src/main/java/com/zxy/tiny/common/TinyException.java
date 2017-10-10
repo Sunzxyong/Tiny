@@ -34,4 +34,11 @@ public final class TinyException {
             super(message);
         }
     }
+
+    public static final class DispatcherException extends RuntimeException {
+        public DispatcherException(String message) {
+            super(message);
+        }
+    }
+
 }

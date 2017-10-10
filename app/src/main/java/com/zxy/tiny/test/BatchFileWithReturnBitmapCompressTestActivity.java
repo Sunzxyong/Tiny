@@ -226,7 +226,7 @@ public class BatchFileWithReturnBitmapCompressTestActivity extends BaseActivity 
             File[] files = new File[]{outfile1, outfile2, outfile3, outfile4};
             Tiny.getInstance().source(files).batchAsFile().withOptions(compressOptions).batchCompress(new FileWithBitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress file failed!");
                         return;
@@ -275,7 +275,7 @@ public class BatchFileWithReturnBitmapCompressTestActivity extends BaseActivity 
 
             Tiny.getInstance().source(bitmaps).batchAsFile().withOptions(compressOptions).batchCompress(new FileWithBitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress file failed!");
                         return;
@@ -311,7 +311,7 @@ public class BatchFileWithReturnBitmapCompressTestActivity extends BaseActivity 
 
             Tiny.getInstance().source(resIds).batchAsFile().withOptions(compressOptions).batchCompress(new FileWithBitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress file failed!");
                         return;
@@ -348,7 +348,7 @@ public class BatchFileWithReturnBitmapCompressTestActivity extends BaseActivity 
 
             Tiny.getInstance().source(uris).batchAsFile().withOptions(compressOptions).batchCompress(new FileWithBitmapBatchCallback() {
                 @Override
-                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+                public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t) {
                     if (!isSuccess) {
                         mCompressTv.setText("batch compress file failed!");
                         return;

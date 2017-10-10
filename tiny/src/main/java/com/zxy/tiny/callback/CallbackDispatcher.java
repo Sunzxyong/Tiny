@@ -5,6 +5,6 @@ package com.zxy.tiny.callback;
  */
 public interface CallbackDispatcher<T> {
 
-    void dispatch(T t);
+    void dispatch(T t, Throwable tr);
 
 }

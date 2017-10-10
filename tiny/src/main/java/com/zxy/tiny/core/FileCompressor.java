@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 
 import com.zxy.libjpegturbo.JpegTurboCompressor;
@@ -37,7 +36,6 @@ public class FileCompressor {
 
         CompressResult result = null;
         Bitmap bitmap = shouldKeepSampling(bytes, options);
-        Log.e("zxy", "bitmap00:" + bitmap.getWidth() + "," + bitmap.getHeight());
         result = compress(bitmap, options, withBitmap, recycle);
         return result;
     }
@@ -45,7 +43,6 @@ public class FileCompressor {
     public static CompressResult compress(Bitmap bitmap, Tiny.FileCompressOptions options, boolean withBitmap, boolean recycle) {
         if (bitmap == null || bitmap.isRecycled())
             return null;
-        Log.e("zxy", "bitmap11:" + bitmap.getWidth() + "," + bitmap.getHeight());
         CompressResult result = new CompressResult();
 
         if (options == null)
@@ -67,7 +64,17 @@ public class FileCompressor {
         if (bitmap.hasAlpha())
             outfile = FileKit.generateCompressOutfileFormatPNG().getAbsolutePath();
 
-        boolean isSuccess = compress(bitmap, outfile, quality);
+        boolean isSuccess = false;
+        try {
+            isSuccess = compress(bitmap, outfile, quality);
+        } catch (FileNotFoundException e) {
+            result.throwable = e;
+            e.printStackTrace();
+        } catch (Exception e) {
+            //avoid v6.0+ occur crash without permission
+            result.throwable = e;
+            e.printStackTrace();
+        }
 
         if (size > 0 && isSuccess) {
             float outfileSize = (float) FileKit.getSizeInBytes(outfile) / (float) 1024;
@@ -75,7 +82,16 @@ public class FileCompressor {
                 if (quality <= 25)
                     break;
                 quality -= 5;
-                isSuccess = compress(bitmap, outfile, quality);
+                try {
+                    isSuccess = compress(bitmap, outfile, quality);
+                } catch (FileNotFoundException e) {
+                    result.throwable = e;
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    //avoid v6.0+ occur crash without permission
+                    result.throwable = e;
+                    e.printStackTrace();
+                }
                 if (!isSuccess)
                     break;
                 outfileSize = (float) FileKit.getSizeInBytes(outfile) / (float) 1024;
@@ -99,7 +115,7 @@ public class FileCompressor {
         return result;
     }
 
-    private static boolean compress(Bitmap bitmap, String outfile, int quality) {
+    private static boolean compress(Bitmap bitmap, String outfile, int quality) throws FileNotFoundException {
         if (bitmap == null || bitmap.isRecycled())
             return false;
 
@@ -116,26 +132,18 @@ public class FileCompressor {
 
     private static final class CompatCompressor {
 
-        static boolean compress(Bitmap bitmap, String outfile, int quality, Bitmap.CompressFormat format) {
+        static boolean compress(Bitmap bitmap, String outfile, int quality, Bitmap.CompressFormat format) throws FileNotFoundException {
             boolean isSuccess = false;
             FileOutputStream fos = null;
             try {
                 fos = new FileOutputStream(outfile);
                 isSuccess = bitmap.compress(format, quality, fos);
-            } catch (FileNotFoundException e) {
-                isSuccess = false;
-                e.printStackTrace();
-            } catch (Exception e) {
-                //avoid v6.0+ occur crash without permission
-                e.printStackTrace();
             } finally {
-                if (isSuccess) {
-                    if (fos != null) {
-                        try {
-                            fos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                if (fos != null) {
+                    try {
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -176,7 +184,7 @@ public class FileCompressor {
         return result;
     }
 
-    public static Bitmap shouldKeepSampling(int resId, Tiny.FileCompressOptions options) {
+    public static Bitmap shouldKeepSampling(int resId, Tiny.FileCompressOptions options) throws Exception {
         if (options == null)
             options = new Tiny.FileCompressOptions();
 
@@ -190,8 +198,6 @@ public class FileCompressor {
                 BitmapFactory.Options decodeOptions = CompressKit.getDefaultDecodeOptions();
                 decodeOptions.inPreferredConfig = options.config;
                 return BitmapFactory.decodeStream(is, null, decodeOptions);
-            } catch (Exception e) {
-                e.printStackTrace();
             } finally {
                 if (is != null) {
                     try {
@@ -207,7 +213,7 @@ public class FileCompressor {
         return result;
     }
 
-    public static Bitmap shouldKeepSampling(Uri uri, final Tiny.FileCompressOptions options) {
+    public static Bitmap shouldKeepSampling(Uri uri, final Tiny.FileCompressOptions options) throws Exception {
         if (uri == null)
             return null;
 
@@ -244,8 +250,6 @@ public class FileCompressor {
                     } else {
                         result[0] = BitmapCompressor.compress(decodeBytes, options, true);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 } finally {
                     try {
                         if (fis != null)

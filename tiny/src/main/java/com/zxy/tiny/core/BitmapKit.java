@@ -31,7 +31,7 @@ public final class BitmapKit {
 
     private static final int RGB_565_BYTES_PER_PIXEL = 2;
 
-    public static Pair<Integer, Integer> decodeDimensions(String filePath) {
+    public static Pair<Integer, Integer> decodeDimensions(String filePath) throws Exception {
         boolean isExist = Conditions.fileIsExist(filePath);
         if (!isExist)
             return null;
@@ -39,8 +39,6 @@ public final class BitmapKit {
         try {
             is = new FileInputStream(filePath);
             return decodeDimensions(CompressKit.transformToByteArray(is));
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (is != null) {
                 try {
@@ -50,7 +48,6 @@ public final class BitmapKit {
                 }
             }
         }
-        return null;
     }
 
     public static Pair<Integer, Integer> decodeDimensions(byte[] bytes) {
@@ -62,7 +59,7 @@ public final class BitmapKit {
                 null : Pair.create(options.outWidth, options.outHeight);
     }
 
-    public static Pair<Integer, Integer> decodeDimensions(int resId) {
+    public static Pair<Integer, Integer> decodeDimensions(int resId) throws Exception {
         //for drawable resource,get the original size of resources,without scaling.
         InputStream is = null;
         Resources resources = Tiny.getInstance().getApplication().getResources();
@@ -72,8 +69,6 @@ public final class BitmapKit {
             BitmapFactory.decodeStream(is, null, options);
             return (options.outWidth == -1 || options.outHeight == -1) ?
                     null : Pair.create(options.outWidth, options.outHeight);
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (is != null) {
                 try {
@@ -83,7 +78,6 @@ public final class BitmapKit {
                 }
             }
         }
-        return null;
     }
 
     public static Pair<Integer, Integer> decodeDimensions(FileDescriptor fd) {
@@ -101,7 +95,7 @@ public final class BitmapKit {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             try {
                 return bitmap.getAllocationByteCount();
-            } catch (NullPointerException e) {
+            } catch (Exception e) {
                 //ignore...
             }
         }

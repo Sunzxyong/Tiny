@@ -5,6 +5,6 @@ package com.zxy.tiny.callback;
  */
 public interface FileCallback extends Callback {
 
-    void callback(boolean isSuccess, String outfile);
+    void callback(boolean isSuccess, String outfile, Throwable t);
 
 }

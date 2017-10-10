@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -133,8 +134,9 @@ public class FileCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(bitmapBytes).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }
@@ -171,8 +173,9 @@ public class FileCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(outfile).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }
@@ -200,11 +203,13 @@ public class FileCompressTestActivity extends BaseActivity {
 
             Tiny.FileCompressOptions compressOptions = new Tiny.FileCompressOptions();
             compressOptions.config = mConfig;
+            compressOptions.size = 200;
 
             Tiny.getInstance().source(originBitmap).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }
@@ -243,8 +248,9 @@ public class FileCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(is2).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }
@@ -275,8 +281,9 @@ public class FileCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(R.drawable.test).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getLocalizedMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }
@@ -330,8 +337,9 @@ public class FileCompressTestActivity extends BaseActivity {
             compressOptions.config = mConfig;
             Tiny.getInstance().source(Uri.parse(url)).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
-                public void callback(boolean isSuccess, String outfile) {
+                public void callback(boolean isSuccess, String outfile, Throwable t) {
                     if (!isSuccess) {
+                        Log.e("zxy", "error: " + t.getMessage());
                         mCompressTv.setText("compress file failed!");
                         return;
                     }

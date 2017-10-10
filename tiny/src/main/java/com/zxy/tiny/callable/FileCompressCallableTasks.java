@@ -71,8 +71,6 @@ public class FileCompressCallableTasks {
                     mCompressOptions.outfile = mFile.getAbsolutePath();
                 fis = new FileInputStream(mFile);
                 result = FileCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, shouldReturnBitmap, true);
-            } catch (Exception e) {
-                e.printStackTrace();
             } finally {
                 try {
                     if (fis != null)
@@ -95,7 +93,7 @@ public class FileCompressCallableTasks {
 
         @Override
         public CompressResult call() throws Exception {
-            Bitmap bitmap = FileCompressor.shouldKeepSampling(mUri,mCompressOptions);
+            Bitmap bitmap = FileCompressor.shouldKeepSampling(mUri, mCompressOptions);
             if (mCompressOptions != null && mCompressOptions.overrideSource &&
                     (UriUtil.isLocalContentUri(mUri) || UriUtil.isLocalFileUri(mUri))) {
                 mCompressOptions.outfile = UriUtil.getRealPathFromUri(mUri);
@@ -168,8 +166,6 @@ public class FileCompressCallableTasks {
                     }
                     fis = new FileInputStream(file);
                     compressResult = FileCompressor.compress(CompressKit.transformToByteArray(fis), mCompressOptions, shouldReturnBitmap, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 } finally {
                     try {
                         if (fis != null)
@@ -272,7 +268,7 @@ public class FileCompressCallableTasks {
             String[] outfilePaths = getBatchOutfilePaths(mCompressOptions, mResIds.length);
 
             for (int i = 0; i < mResIds.length; i++) {
-                Bitmap bitmap = FileCompressor.shouldKeepSampling(mResIds[i],mCompressOptions);
+                Bitmap bitmap = FileCompressor.shouldKeepSampling(mResIds[i], mCompressOptions);
                 if (mCompressOptions != null && outfilePaths != null && outfilePaths.length == mResIds.length)
                     mCompressOptions.outfile = outfilePaths[i];
 

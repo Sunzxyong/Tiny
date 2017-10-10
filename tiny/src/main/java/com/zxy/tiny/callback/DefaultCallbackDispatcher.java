@@ -17,34 +17,34 @@ public class DefaultCallbackDispatcher<T> implements CallbackDispatcher<T> {
     }
 
     @Override
-    public void dispatch(T t) {
+    public void dispatch(T t, Throwable tr) {
         if (mCallback == null)
             return;
 
         if (mCallback instanceof BitmapCallback) {
             if (t != null && t instanceof Bitmap) {
-                ((BitmapCallback) mCallback).callback(true, (Bitmap) t);
+                ((BitmapCallback) mCallback).callback(true, (Bitmap) t, null);
                 return;
             }
-            ((BitmapCallback) mCallback).callback(false, null);
+            ((BitmapCallback) mCallback).callback(false, null, tr);
         } else if (mCallback instanceof BitmapBatchCallback) {
             if (t != null && t instanceof Bitmap[]) {
-                ((BitmapBatchCallback) mCallback).callback(true, (Bitmap[]) t);
+                ((BitmapBatchCallback) mCallback).callback(true, (Bitmap[]) t, null);
                 return;
             }
-            ((BitmapBatchCallback) mCallback).callback(false, null);
+            ((BitmapBatchCallback) mCallback).callback(false, null, tr);
         } else if (mCallback instanceof FileCallback) {
             if (t != null && t instanceof CompressResult) {
-                ((FileCallback) mCallback).callback(((CompressResult) t).success, ((CompressResult) t).outfile);
+                ((FileCallback) mCallback).callback(((CompressResult) t).success, ((CompressResult) t).outfile, ((CompressResult) t).throwable);
                 return;
             }
-            ((FileCallback) mCallback).callback(false, null);
+            ((FileCallback) mCallback).callback(false, null, tr);
         } else if (mCallback instanceof FileWithBitmapCallback) {
             if (t != null && t instanceof CompressResult) {
-                ((FileWithBitmapCallback) mCallback).callback(((CompressResult) t).success, ((CompressResult) t).bitmap, ((CompressResult) t).outfile);
+                ((FileWithBitmapCallback) mCallback).callback(((CompressResult) t).success, ((CompressResult) t).bitmap, ((CompressResult) t).outfile, ((CompressResult) t).throwable);
                 return;
             }
-            ((FileWithBitmapCallback) mCallback).callback(false, null, null);
+            ((FileWithBitmapCallback) mCallback).callback(false, null, null, tr);
         } else if (mCallback instanceof FileBatchCallback) {
             if (t != null && t instanceof BatchCompressResult) {
                 CompressResult[] result = ((BatchCompressResult) t).results;
@@ -54,11 +54,11 @@ public class DefaultCallbackDispatcher<T> implements CallbackDispatcher<T> {
                         CompressResult cr = result[i];
                         outfile[i] = cr == null ? null : cr.outfile;
                     }
-                    ((FileBatchCallback) mCallback).callback(((BatchCompressResult) t).success, outfile);
+                    ((FileBatchCallback) mCallback).callback(((BatchCompressResult) t).success, outfile, ((BatchCompressResult) t).throwable);
                     return;
                 }
-                ((FileBatchCallback) mCallback).callback(false, null);
             }
+            ((FileBatchCallback) mCallback).callback(false, null, tr);
         } else if (mCallback instanceof FileWithBitmapBatchCallback) {
             if (t != null && t instanceof BatchCompressResult) {
                 CompressResult[] result = ((BatchCompressResult) t).results;
@@ -70,11 +70,11 @@ public class DefaultCallbackDispatcher<T> implements CallbackDispatcher<T> {
                         bitmaps[i] = cr == null ? null : cr.bitmap;
                         outfile[i] = cr == null ? null : cr.outfile;
                     }
-                    ((FileWithBitmapBatchCallback) mCallback).callback(((BatchCompressResult) t).success, bitmaps, outfile);
+                    ((FileWithBitmapBatchCallback) mCallback).callback(((BatchCompressResult) t).success, bitmaps, outfile, ((BatchCompressResult) t).throwable);
                     return;
                 }
             }
-            ((FileWithBitmapBatchCallback) mCallback).callback(false, null, null);
+            ((FileWithBitmapBatchCallback) mCallback).callback(false, null, null, tr);
         }
     }
 

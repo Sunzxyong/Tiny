@@ -116,7 +116,7 @@ public class BitmapCompressor {
         return result;
     }
 
-    public static Bitmap compress(int resId, Tiny.BitmapCompressOptions options, boolean isViewMode) {
+    public static Bitmap compress(int resId, Tiny.BitmapCompressOptions options, boolean isViewMode) throws Exception {
         if (options == null)
             options = new Tiny.BitmapCompressOptions();
 
@@ -230,7 +230,7 @@ public class BitmapCompressor {
         return bitmap;
     }
 
-    public static Bitmap sampleCompress(int resId, int sampleSize, Tiny.BitmapCompressOptions options) {
+    public static Bitmap sampleCompress(int resId, int sampleSize, Tiny.BitmapCompressOptions options) throws Exception {
         InputStream is = null;
         Resources resources = Tiny.getInstance().getApplication().getResources();
         try {
@@ -241,8 +241,6 @@ public class BitmapCompressor {
             Bitmap bitmap = BitmapFactory.decodeStream(is, null, decodeOptions);
             bitmap = Degrees.handle(bitmap, resId);
             return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
             if (is != null) {
                 try {
@@ -252,7 +250,6 @@ public class BitmapCompressor {
                 }
             }
         }
-        return null;
     }
 
     private static Bitmap matrixCompress(Bitmap bitmap, int baseline, boolean recycle) {
