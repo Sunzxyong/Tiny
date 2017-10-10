@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-compile 'com.zxy.android:tiny:0.0.7'
+compile 'com.zxy.android:tiny:0.1.0'
 ```
 
 ### **Choose an abi**
@@ -59,7 +59,7 @@ android {
         //options.height = xxx;//some compression configuration.
         Tiny.getInstance().source("").asBitmap().withOptions(options).compress(new BitmapCallback() {
             @Override
-            public void callback(boolean isSuccess, Bitmap bitmap) {
+            public void callback(boolean isSuccess, Bitmap bitmap, Throwable t) {
                 //return the compressed bitmap object
             }
         });
@@ -71,7 +71,7 @@ android {
         Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
         Tiny.getInstance().source("").asFile().withOptions(options).compress(new FileCallback() {
             @Override
-            public void callback(boolean isSuccess, String outfile) {
+            public void callback(boolean isSuccess, String outfile, Throwable t) {
                 //return the compressed file path
             }
         });
@@ -82,7 +82,7 @@ android {
         Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
         Tiny.getInstance().source("").asFile().withOptions(options).compress(new FileWithBitmapCallback() {
             @Override
-            public void callback(boolean isSuccess, Bitmap bitmap, String outfile) {
+            public void callback(boolean isSuccess, Bitmap bitmap, String outfile, Throwable t) {
                 //return the compressed file path and bitmap object
             }
         });
@@ -94,7 +94,7 @@ android {
         Tiny.BitmapCompressOptions options = new Tiny.BitmapCompressOptions();
         Tiny.getInstance().source("").batchAsBitmap().withOptions(options).batchCompress(new BitmapBatchCallback() {
             @Override
-            public void callback(boolean isSuccess, Bitmap[] bitmaps) {
+            public void callback(boolean isSuccess, Bitmap[] bitmaps, Throwable t) {
                 //return the batch compressed bitmap object
             }
         });
@@ -105,7 +105,7 @@ android {
         Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
         Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompress(new FileBatchCallback() {
             @Override
-            public void callback(boolean isSuccess, String[] outfile) {
+            public void callback(boolean isSuccess, String[] outfile, Throwable t) {
                 //return the batch compressed file path
             }
         });
@@ -116,7 +116,7 @@ android {
         Tiny.FileCompressOptions options = new Tiny.FileCompressOptions();
         Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompress(new FileWithBitmapBatchCallback() {
             @Override
-            public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile) {
+            public void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t) {
                 //return the batch compressed file path and bitmap object
             }
         });
@@ -131,6 +131,7 @@ android {
 * **v0.0.5**：Fix google store reject.
 * **v0.0.6**：Initialization is not must.Add clear compression directory method,see`{@link Tiny#clearCompressDirectory}`
 * **v0.0.7**：fix issue#29
+* **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`
 
 ## **License**
 
