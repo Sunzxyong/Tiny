@@ -131,7 +131,7 @@ android {
 * **v0.0.5**：Fix google store reject.
 * **v0.0.6**：Initialization is not must.Add clear compression directory method,see`{@link Tiny#clearCompressDirectory}`
 * **v0.0.7**：fix issue#29
-* **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`
+* **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`, see [Update Introduce](https://github.com/Sunzxyong/Tiny/issues/38)
 
 ## **License**
 
