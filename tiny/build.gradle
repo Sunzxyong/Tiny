@@ -1,14 +1,12 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion 26
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -29,21 +27,22 @@ dependencies {
 
 }
 
-ext {
-    upload_group_id = 'com.zxy.android'
-    upload_version = '0.1.0'
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-    site_url = 'https://github.com/Sunzxyong/Tiny'
-    git_url = 'https://github.com/Sunzxyong/Tiny.git'
-    git_issue_url = 'https://github.com/Sunzxyong/Tiny/issues'
-
-    bintray_pkg_repo = 'maven'
-    bintray_pkg_name = 'Tiny'
-    bintray_pkg_desc = 'an image compression framework.'
-
-    developer_id = 'Sunzxyong'
-    developer_name = 'zhengxiaoyong'
-    developer_email = '1175151739@qq.com'
+publish {
+    userOrg = 'sunzxyong'
+    uploadName = 'Tiny'
+    groupId = 'com.zxy.android'
+    artifactId = 'tiny'
+    publishVersion = '0.1.0'
+    repoName = 'maven'
+    dryRun = 'false'
+    desc = 'an image compression framework.'
+    website = 'https://github.com/Sunzxyong/Tiny'
+    issueTracker = 'https://github.com/Sunzxyong/Tiny/issues'
+    repository = 'https://github.com/Sunzxyong/Tiny.git'
+    bintrayUser = properties.getProperty("bintray.user")
+    bintrayKey = properties.getProperty("bintray.apikey")
 }
-
-apply from: 'publish.gradle'
+//./gradlew clean build bintrayUpload -PdryRun=false
