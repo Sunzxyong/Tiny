@@ -7,6 +7,6 @@ import android.graphics.Bitmap;
  */
 public interface FileWithBitmapBatchCallback extends Callback {
 
-    void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfile, Throwable t);
+    void callback(boolean isSuccess, Bitmap[] bitmaps, String[] outfiles, Throwable t);
 
 }

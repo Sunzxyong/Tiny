@@ -35,8 +35,14 @@ public class FileBatchCompressEngine extends CompressEngine {
     }
 
     private void impl(Callback callback) {
-        if (mSource == null)
+        if (mSource == null) {
+            if (callback instanceof FileBatchCallback) {
+                ((FileBatchCallback) callback).callback(false, null, new RuntimeException("the source is null!"));
+            } else if (callback instanceof FileWithBitmapBatchCallback) {
+                ((FileWithBitmapBatchCallback) callback).callback(false, null, null, new RuntimeException("the source is null!"));
+            }
             return;
+        }
 
         boolean shouldReturnBitmap = false;
 

@@ -29,8 +29,12 @@ public class BitmapBatchCompressEngine extends CompressEngine {
     }
 
     private void impl(Callback callback) {
-        if (mSource == null)
+        if (mSource == null) {
+            if (callback instanceof BitmapBatchCallback) {
+                ((BitmapBatchCallback) callback).callback(false, null, new RuntimeException("the source is null!"));
+            }
             return;
+        }
 
         if (mCompressOptions == null)
             mCompressOptions = new Tiny.BitmapCompressOptions();
