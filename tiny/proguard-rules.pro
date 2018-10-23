@@ -15,3 +15,15 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-ignorewarnings
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep @android.support.annotation.Keep class *
+-keepclassmembers class * {
+    @android.support.annotation.Keep *;
+}
+-keepclasseswithmembers class * implements java.io.Serializable {*;}
+
+-keep class com.zxy.libjpegturbo.JpegTurboCompressor {*;}
+-keep class com.zxy.tiny.Tiny {*;}
