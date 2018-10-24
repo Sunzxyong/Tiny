@@ -33,7 +33,7 @@ public class BitmapBatchCompressEngine extends CompressEngine {
         return implSync();
     }
 
-    public BitmapBatchResult implSync() {
+    private BitmapBatchResult implSync() {
         BitmapBatchResult result = new BitmapBatchResult();
 
         if (mSource == null) {
