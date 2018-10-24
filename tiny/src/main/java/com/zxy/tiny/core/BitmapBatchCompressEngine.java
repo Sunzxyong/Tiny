@@ -8,6 +8,7 @@ import com.zxy.tiny.callable.BitmapCompressCallableTasks;
 import com.zxy.tiny.callback.BitmapBatchCallback;
 import com.zxy.tiny.callback.Callback;
 import com.zxy.tiny.callback.DefaultCallbackDispatcher;
+import com.zxy.tiny.common.BitmapBatchResult;
 
 import java.io.File;
 
@@ -26,6 +27,63 @@ public class BitmapBatchCompressEngine extends CompressEngine {
 
     public void batchCompress(BitmapBatchCallback callback) {
         impl(callback);
+    }
+
+    public BitmapBatchResult batchCompressSync() {
+        return implSync();
+    }
+
+    public BitmapBatchResult implSync() {
+        BitmapBatchResult result = new BitmapBatchResult();
+
+        if (mSource == null) {
+            result.success = false;
+            result.throwable = new RuntimeException("the source is null!");
+            return result;
+        }
+
+        if (mCompressOptions == null)
+            mCompressOptions = new Tiny.BitmapCompressOptions();
+
+        if (mSourceType == SourceType.FILE_ARRAY) {
+            File[] file = (File[]) mSource;
+            try {
+                result.bitmaps = new BitmapCompressCallableTasks.FileArrayAsBitmapCallable(mCompressOptions, file).call();
+                result.success = true;
+            } catch (Exception e) {
+                result.success = false;
+                result.throwable = e;
+            }
+        } else if (mSourceType == SourceType.BITMAP_ARRAY) {
+            Bitmap[] bitmaps = (Bitmap[]) mSource;
+            try {
+                result.bitmaps = new BitmapCompressCallableTasks.BitmapArrayAsBitmapCallable(mCompressOptions, bitmaps).call();
+                result.success = true;
+            } catch (Exception e) {
+                result.success = false;
+                result.throwable = e;
+            }
+        } else if (mSourceType == SourceType.URI_ARRAY) {
+            Uri[] uris = (Uri[]) mSource;
+            try {
+                result.bitmaps = new BitmapCompressCallableTasks.UriArrayAsBitmapCallable(mCompressOptions, uris).call();
+                result.success = true;
+            } catch (Exception e) {
+                result.success = false;
+                result.throwable = e;
+            }
+        } else if (mSourceType == SourceType.RES_ID_ARRAY) {
+            int[] resIds = (int[]) mSource;
+            try {
+                result.bitmaps = new BitmapCompressCallableTasks.ResourceArrayAsBitmapCallable(mCompressOptions, resIds).call();
+                result.success = true;
+            } catch (Exception e) {
+                result.success = false;
+                result.throwable = e;
+            }
+        }
+
+        return result;
     }
 
     private void impl(Callback callback) {
