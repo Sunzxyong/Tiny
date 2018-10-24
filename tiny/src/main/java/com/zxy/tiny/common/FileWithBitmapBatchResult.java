@@ -1,23 +1,18 @@
 package com.zxy.tiny.common;
 
-import android.graphics.Bitmap;
-
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by zhengxiaoyong on 2018/10/23.
  */
 public class FileWithBitmapBatchResult extends Result {
 
-    public Bitmap[] bitmaps;
-
-    public String[] outfiles;
+    public List<FileWithBitmapResult> results;
 
     @Override
     public String toString() {
         return "FileWithBitmapBatchResult{" +
-                "bitmaps=" + Arrays.toString(bitmaps) +
-                ", outfiles=" + Arrays.toString(outfiles) +
+                "results=" + results +
                 ", success=" + success +
                 ", throwable=" + throwable +
                 '}';

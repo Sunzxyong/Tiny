@@ -1,18 +1,18 @@
 package com.zxy.tiny.common;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by zhengxiaoyong on 2018/10/23.
  */
 public class FileBatchResult extends Result {
 
-    public String[] outfiles;
+    public List<String> outfiles;
 
     @Override
     public String toString() {
         return "FileBatchResult{" +
-                "outfiles=" + Arrays.toString(outfiles) +
+                "outfiles=" + outfiles +
                 ", success=" + success +
                 ", throwable=" + throwable +
                 '}';
