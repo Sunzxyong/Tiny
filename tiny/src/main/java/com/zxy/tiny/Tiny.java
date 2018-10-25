@@ -183,6 +183,11 @@ public final class Tiny {
         public String outfile;
 
         /**
+         * Sets the directory path where the compressed result will be stored.
+         */
+        public String compressDirectory;
+
+        /**
          * Whether need to cover the source file,only to the file(file、content://、file://).
          */
         public boolean overrideSource = false;
