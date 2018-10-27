@@ -63,6 +63,9 @@ android {
                 //return the compressed bitmap object
             }
         });
+        
+        //or sync compress.
+        BitmapResult result = Tiny.getInstance().source("").asBitmap().withOptions(options).compressSync();
 ```
 
 #### **AsFile**
@@ -75,6 +78,9 @@ android {
                 //return the compressed file path
             }
         });
+        
+        //or sync compress.
+        FileResult result = Tiny.getInstance().source("").asFile().withOptions(options).compressSync();
 ```
 #### **AsFileWithReturnBitmap**
 
@@ -86,6 +92,9 @@ android {
                 //return the compressed file path and bitmap object
             }
         });
+        
+        //or sync compress.
+        FileWithBitmapResult result = Tiny.getInstance().source("").asFile().withOptions(options).compressWithReturnBitmapSync();
 ```
 
 #### **BatchAsBitmap**
@@ -98,6 +107,9 @@ android {
                 //return the batch compressed bitmap object
             }
         });
+        
+        //or sync compress.
+        BitmapBatchResult result = Tiny.getInstance().source("").batchAsBitmap().withOptions(options).batchCompressSync();
 ```
 #### **BatchAsFile**
 
@@ -109,6 +121,9 @@ android {
                 //return the batch compressed file path
             }
         });
+        
+        //or sync compress.
+        FileBatchResult result = Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompressSync();
 ```
 #### **BatchAsFileWithReturnBitmap**
 
@@ -120,6 +135,9 @@ android {
                 //return the batch compressed file path and bitmap object
             }
         });
+        
+        //or sync compress.
+        FileWithBitmapBatchResult result = Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompressWithReturnBitmapResult();
 ```
 
 ## **Version**
