@@ -171,6 +171,7 @@ public class FileCompressTestActivity extends BaseActivity {
 
             Tiny.FileCompressOptions compressOptions = new Tiny.FileCompressOptions();
             compressOptions.config = mConfig;
+//            compressOptions.compressDirectory = Tiny.getInstance().getApplication().getFilesDir().getAbsolutePath();
             Tiny.getInstance().source(outfile).asFile().withOptions(compressOptions).compress(new FileCallback() {
                 @Override
                 public void callback(boolean isSuccess, String outfile, Throwable t) {

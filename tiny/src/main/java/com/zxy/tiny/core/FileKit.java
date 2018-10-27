@@ -42,6 +42,44 @@ public final class FileKit {
         return new File(getDefaultFileCompressDirectory(), "tiny-" + seed + "-" + suffix + ".png");
     }
 
+    public static File generateCompressOutfileFormatJPEG(String directory) {
+        if (TextUtils.isEmpty(directory))
+            return generateCompressOutfileFormatJPEG();
+        String suffix = getDateFormat().format(new Date(System.currentTimeMillis()));
+        int seed = RANDOM.nextInt(1000);
+        File parent;
+        try {
+            parent = new File(directory);
+            if (parent.exists() && parent.isFile()) {
+                parent = getDefaultFileCompressDirectory();
+            } else {
+                parent.mkdirs();
+            }
+        } catch (Exception e) {
+            parent = getDefaultFileCompressDirectory();
+        }
+        return new File(parent, "tiny-" + seed + "-" + suffix + ".jpg");
+    }
+
+    public static File generateCompressOutfileFormatPNG(String directory) {
+        if (TextUtils.isEmpty(directory))
+            return generateCompressOutfileFormatPNG();
+        String suffix = getDateFormat().format(new Date(System.currentTimeMillis()));
+        int seed = RANDOM.nextInt(1000);
+        File parent;
+        try {
+            parent = new File(directory);
+            if (parent.exists() && parent.isFile()) {
+                parent = getDefaultFileCompressDirectory();
+            } else {
+                parent.mkdirs();
+            }
+        } catch (Exception e) {
+            parent = getDefaultFileCompressDirectory();
+        }
+        return new File(parent, "tiny-" + seed + "-" + suffix + ".png");
+    }
+
     public static File getDefaultFileCompressDirectory() {
         File file = null;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {

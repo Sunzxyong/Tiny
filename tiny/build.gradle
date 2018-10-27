@@ -9,6 +9,8 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     lintOptions {
@@ -35,7 +37,7 @@ publish {
     uploadName = 'Tiny'
     groupId = 'com.zxy.android'
     artifactId = 'tiny'
-    publishVersion = '0.1.0'
+    publishVersion = '1.0.0'
     repoName = 'maven'
     dryRun = 'false'
     desc = 'an image compression framework.'

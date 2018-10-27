@@ -51,18 +51,19 @@ public class FileCompressor {
         int quality = options.quality;
         String outfile = options.outfile;
         float size = options.size;
+        String compressDirectory = options.compressDirectory;
 
         if (quality < 0 || quality > 100)
             quality = CompressKit.DEFAULT_QUALITY;
 
         if (Conditions.isDirectory(outfile))
-            outfile = FileKit.generateCompressOutfileFormatJPEG().getAbsolutePath();
+            outfile = FileKit.generateCompressOutfileFormatJPEG(compressDirectory).getAbsolutePath();
 
         if (!Conditions.isJpegFormat(outfile))
-            outfile = FileKit.generateCompressOutfileFormatJPEG().getAbsolutePath();
+            outfile = FileKit.generateCompressOutfileFormatJPEG(compressDirectory).getAbsolutePath();
 
         if (bitmap.hasAlpha())
-            outfile = FileKit.generateCompressOutfileFormatPNG().getAbsolutePath();
+            outfile = FileKit.generateCompressOutfileFormatPNG(compressDirectory).getAbsolutePath();
 
         boolean isSuccess = false;
         try {

@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-implementation 'com.zxy.android:tiny:0.1.0'
+implementation 'com.zxy.android:tiny:1.0.0'
 ```
 
 ### **Choose an abi**
@@ -63,6 +63,9 @@ android {
                 //return the compressed bitmap object
             }
         });
+        
+        //or sync compress.
+        BitmapResult result = Tiny.getInstance().source("").asBitmap().withOptions(options).compressSync();
 ```
 
 #### **AsFile**
@@ -75,6 +78,9 @@ android {
                 //return the compressed file path
             }
         });
+        
+        //or sync compress.
+        FileResult result = Tiny.getInstance().source("").asFile().withOptions(options).compressSync();
 ```
 #### **AsFileWithReturnBitmap**
 
@@ -86,6 +92,9 @@ android {
                 //return the compressed file path and bitmap object
             }
         });
+        
+        //or sync compress.
+        FileWithBitmapResult result = Tiny.getInstance().source("").asFile().withOptions(options).compressWithReturnBitmapSync();
 ```
 
 #### **BatchAsBitmap**
@@ -98,6 +107,9 @@ android {
                 //return the batch compressed bitmap object
             }
         });
+        
+        //or sync compress.
+        BitmapBatchResult result = Tiny.getInstance().source("").batchAsBitmap().withOptions(options).batchCompressSync();
 ```
 #### **BatchAsFile**
 
@@ -109,6 +121,9 @@ android {
                 //return the batch compressed file path
             }
         });
+        
+        //or sync compress.
+        FileBatchResult result = Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompressSync();
 ```
 #### **BatchAsFileWithReturnBitmap**
 
@@ -120,6 +135,9 @@ android {
                 //return the batch compressed file path and bitmap object
             }
         });
+        
+        //or sync compress.
+        FileWithBitmapBatchResult result = Tiny.getInstance().source("").batchAsFile().withOptions(options).batchCompressWithReturnBitmapResult();
 ```
 
 ## **Version**
@@ -132,6 +150,7 @@ android {
 * **v0.0.6**：Initialization is not must.Add clear compression directory method,see`{@link Tiny#clearCompressDirectory}`
 * **v0.0.7**：fix issue#29
 * **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`, see [Update Introduce](https://github.com/Sunzxyong/Tiny/issues/38)
+* **v1.0.0**：Add synchronous compression method and compression directory Settings.
 
 ## **License**
 
@@ -141,7 +160,7 @@ android {
 >     Version 2.0, January 2004
 >     http://www.apache.org/licenses/
 >
->     Copyright 2017 郑晓勇
+>     Copyright 2018 郑晓勇
 >
 >  Licensed under the Apache License, Version 2.0 (the "License");
 >  you may not use this file except in compliance with the License.
