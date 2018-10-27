@@ -28,6 +28,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
-    implementation project(':tiny')
+//    implementation project(':tiny')
+    implementation 'com.zxy.android:tiny:1.0.0'
     implementation 'com.zxy.android:recovery:1.0.0'
 }
