@@ -1,1 +1,3 @@
-include ':app', ':tiny', ':libjpeg-turbo', ':libjpeg-turbo-sdk'
+include ':app', ':tiny'
+
+//':libjpeg-turbo', ':libjpeg-turbo-sdk'

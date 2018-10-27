@@ -208,7 +208,7 @@ public class BatchFileCompressTestActivity extends BaseActivity {
 
             Tiny.FileCompressOptions compressOptions = new Tiny.FileCompressOptions();
             compressOptions.config = mConfig;
-
+//            compressOptions.compressDirectory = Tiny.getInstance().getApplication().getFilesDir().getAbsolutePath();
             File[] files = new File[]{outfile1, outfile2, outfile3, outfile4};
             Tiny.getInstance().source(files).batchAsFile().withOptions(compressOptions).batchCompress(new FileBatchCallback() {
                 @Override
