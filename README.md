@@ -153,8 +153,9 @@ android {
 * **v1.0.0**：Add synchronous compression method and compression directory Settings.
 
 ## **About**
-**Blog**：[https://zhengxiaoyong.com](https://zhengxiaoyong.com)
-**Wechat**：
+* **Blog**：[https://zhengxiaoyong.com](https://zhengxiaoyong.com)
+* **Wechat**：
+
 ![](https://raw.githubusercontent.com/Sunzxyong/ImageRepository/master/qrcode.jpg)
 
 ## **License**
