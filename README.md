@@ -152,6 +152,11 @@ android {
 * **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`, see [Update Introduce](https://github.com/Sunzxyong/Tiny/issues/38)
 * **v1.0.0**：Add synchronous compression method and compression directory Settings.
 
+## **About**
+**Blog**：[https://zhengxiaoyong.com](https://zhengxiaoyong.com)
+**Wechat**：
+![](https://raw.githubusercontent.com/Sunzxyong/ImageRepository/master/qrcode.jpg)
+
 ## **License**
 
 >
