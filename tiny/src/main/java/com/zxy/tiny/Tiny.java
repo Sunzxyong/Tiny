@@ -134,9 +134,15 @@ public final class Tiny {
         public Bitmap.Config config = CompressKit.DEFAULT_CONFIG;
 
         /**
+         * By default, using 1280 px. suggest value for (1280|2560).
+         */
+        public int baseline;
+
+        /**
          * The width of the bitmap.
          * <p>
          * If the value is zero,the default compression maximum width is the screen width or {@link CompressKit#DEFAULT_MAX_COMPRESS_SIZE}.
+         * see {@link Tiny.BitmapCompressOptions#baseline}.
          */
         public int width;
 
@@ -144,6 +150,7 @@ public final class Tiny {
          * The height of the bitmap.
          * <p>
          * If the value is zero,the default compression maximum height is the screen height or {@link CompressKit#DEFAULT_MAX_COMPRESS_SIZE}.
+         * see {@link Tiny.BitmapCompressOptions#baseline}.
          */
         public int height;
     }

@@ -37,7 +37,7 @@ publish {
     uploadName = 'Tiny'
     groupId = 'com.zxy.android'
     artifactId = 'tiny'
-    publishVersion = '1.0.0'
+    publishVersion = '1.1.0'
     repoName = 'maven'
     dryRun = 'false'
     desc = 'an image compression framework.'

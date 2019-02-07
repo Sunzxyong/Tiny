@@ -39,16 +39,16 @@ public class BitmapCompressor {
 
         int baseline;
         if (isViewMode) {
-            if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
-                    screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            if (screenPair.second >= CompressKit.getBaseline(options.baseline) ||
+                    screenPair.first >= CompressKit.getBaseline(options.baseline)) {
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
                 result = matrixCompress(bitmap, baseline, false);
             } else {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : screenPair.second;
                 result = matrixCompress(bitmap, baseline, false);
             }
         } else {
-            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
             result = matrixCompress(bitmap, baseline, false);
         }
 
@@ -90,18 +90,18 @@ public class BitmapCompressor {
 
         int baseline;
         if (isViewMode) {
-            if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
-                    screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            if (screenPair.second >= CompressKit.getBaseline(options.baseline) ||
+                    screenPair.first >= CompressKit.getBaseline(options.baseline)) {
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
                 int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
                 result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
             } else {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : screenPair.second;
                 int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
                 result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
             }
         } else {
-            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
             int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
             result = matrixCompress(sampleCompress(bytes, sampleSize, options), baseline, true);
         }
@@ -141,18 +141,18 @@ public class BitmapCompressor {
 
         int baseline;
         if (isViewMode) {
-            if (screenPair.second >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE ||
-                    screenPair.first >= CompressKit.DEFAULT_MAX_COMPRESS_SIZE) {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            if (screenPair.second >= CompressKit.getBaseline(options.baseline) ||
+                    screenPair.first >= CompressKit.getBaseline(options.baseline)) {
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
                 int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
                 result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
             } else {
-                baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : screenPair.second;
+                baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : screenPair.second;
                 int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
                 result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
             }
         } else {
-            baseline = hasCustomSize ? Math.min(CompressKit.DEFAULT_MAX_COMPRESS_SIZE, Math.max(compressWidth, compressHeight)) : CompressKit.DEFAULT_MAX_COMPRESS_SIZE;
+            baseline = hasCustomSize ? Math.min(CompressKit.getBaseline(options.baseline), Math.max(compressWidth, compressHeight)) : CompressKit.getBaseline(options.baseline);
             int sampleSize = computeSampleSize(bitmapWidth, bitmapHeight, baseline);
             result = matrixCompress(sampleCompress(resId, sampleSize, options), baseline, true);
         }

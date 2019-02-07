@@ -24,6 +24,10 @@ public final class CompressKit {
 
     private static final int DEFAULT_DECODE_BUFFER_SIZE = 16 * 1024;
 
+    public static int getBaseline(int baseline) {
+        return baseline <= 0 ? DEFAULT_MAX_COMPRESS_SIZE : baseline;
+    }
+
     public static BitmapFactory.Options getDefaultDecodeBoundsOptions() {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
