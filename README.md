@@ -27,7 +27,7 @@ or
 ### **Installation**
 
 ```
-implementation 'com.zxy.android:tiny:1.0.0'
+implementation 'com.zxy.android:tiny:1.1.0'
 ```
 
 ### **Choose an abi**
@@ -151,6 +151,7 @@ android {
 * **v0.0.7**：fix issue#29
 * **v0.1.0**：Add exception thrown interface, add the `Throwable` parameter to the callback method `{@link xxxxCallback#callback}`, see [Update Introduce](https://github.com/Sunzxyong/Tiny/issues/38)
 * **v1.0.0**：Add synchronous compression method and compression directory Settings.
+* **v1.1.0**：Add baseline setting support.
 
 ## **About**
 * **Blog**：[https://zhengxiaoyong.com](https://zhengxiaoyong.com)
